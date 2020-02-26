@@ -16,6 +16,9 @@
     },
     "electron": {
       "tags": []
+    },
+    "local-api": {
+      "tags": []
     }
   }
 }

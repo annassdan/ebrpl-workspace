@@ -1,10 +1,14 @@
 {
-  "productName": "ngxtron",
+  "productName": "EForm",
   "directories": {
     "output": "release/"
   },
   "files": [
     "**/*",
+    {
+      "from": "dist/local-db/local.sqlite",
+      "to": "local-db/local.sqlite"
+    },
     "!**/*.ts",
     "!*.code-workspace",
     "!LICENSE.md",
@@ -26,7 +30,9 @@
     "!.prettierrc"
   ],
   "win": {
-    "target": ["portable"]
+    "icon": "dist/icon.ico",
+    "target": [
+      "portable"]
   },
   "mac": {
     "target": ["dmg"]

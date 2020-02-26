@@ -60,7 +60,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "browser:build"
+            "browserTarget": "browser:build",
+            "proxyConfig": "apps/browser/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -189,10 +190,71 @@
           }
         }
       }
+    },
+    "local-api": {
+      "root": "apps/local-api",
+      "sourceRoot": "apps/local-api/src",
+      "projectType": "application",
+      "prefix": "local-api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/local-api",
+            "main": "apps/local-api/src/main.ts",
+            "tsConfig": "apps/local-api/tsconfig.app.json",
+            "assets": [
+              "apps/local-api/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/local-api/src/environments/environment.ts",
+                  "with": "apps/local-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "local-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "tslint",
+            "tsConfig": [
+              "apps/local-api/tsconfig.app.json",
+              "apps/local-api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/local-api/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/local-api/jest.config.js",
+            "tsConfig": "apps/local-api/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@nrwl/angular",
+    "analytics": false
   },
   "schematics": {
     "@nrwl/angular:application": {

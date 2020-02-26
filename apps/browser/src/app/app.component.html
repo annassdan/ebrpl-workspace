@@ -25,5 +25,18 @@
     >
   </li>
 </ul>
+<br>
+<button (click)="click()">TEST</button>
+{{d$ | async | json}}
 
+
+<button (click)="postNest()">POST NEST</button>
+<br>
+<button (click)="gets()">GETS</button>
+<br>
+<ul>
+  <li *ngFor="let d of data$ | async">
+    {{d.id}}
+  </li>
+</ul>
 <router-outlet></router-outlet>
